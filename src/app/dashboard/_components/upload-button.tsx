@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 import {
   Dialog,
   DialogContent,
@@ -29,7 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import { Doc } from "../../convex/_generated/dataModel";
+import { Doc } from "../../../../convex/_generated/dataModel";
 
 const formSchema = z.object({
   title: z.string().min(1).max(100),
@@ -122,54 +122,56 @@ export function UploadButton() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="mb-8">Upload your file here</DialogTitle>
-          <DialogDescription>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
-              >
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <DialogTitle className="mb-4">Upload your file here</DialogTitle>
 
-                <FormField
-                  control={form.control}
-                  name="file"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel>File</FormLabel>
-                      <FormControl>
-                        <Input type="file" {...fileRef} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  disabled={form.formState.isSubmitting}
-                  className="flex gap-1"
-                >
-                  {form.formState.isSubmitting && (
-                    <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-                  )}
-                  Submit
-                </Button>
-              </form>
-            </Form>
+          <DialogDescription>
+            This file will be accessible by anyone in your organisation
           </DialogDescription>
         </DialogHeader>
+
+        <div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="file"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>File</FormLabel>
+                    <FormControl>
+                      <Input type="file" {...fileRef} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="flex gap-1"
+              >
+                {form.formState.isSubmitting && (
+                  <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+                )}
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
