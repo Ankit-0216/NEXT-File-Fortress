@@ -40,6 +40,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
+import { Protect } from "@clerk/nextjs";
 
 function FileCardActions({
   file,
@@ -107,6 +108,8 @@ function FileCardActions({
               </div>
             )}
           </DropdownMenuItem>
+
+          {/* <Protect role="org:admin" fallback={<></>}> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => setIsConfirmOpen(true)}
@@ -115,6 +118,7 @@ function FileCardActions({
             <Trash2Icon className="w-5 h-5" />
             Delete
           </DropdownMenuItem>
+          {/* </Protect> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </>
@@ -141,9 +145,12 @@ export default function FileCard({
     csv: <GanttChart />,
   } as Record<Doc<"files">["type"], ReactNode>;
 
-  const isFavorited = favorites.some(
-    (favorite) => favorite.fileId === file._id
-  );
+  // const isFavorited = favorites.some(
+  //   (favorite) => favorite.fileId === file._id
+  // );
+
+  const isFavorited =
+    favorites?.some((favorite) => favorite.fileId === file._id) ?? false;
 
   return (
     <div>
