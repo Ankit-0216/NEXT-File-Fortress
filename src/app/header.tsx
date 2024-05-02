@@ -8,12 +8,21 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
 
 function Header() {
   return (
-    <div className="border-b py-4 bg-gray-200">
+    <div className="border-b py-3 bg-gray-200">
       <div className="items-center container mx-auto justify-between flex">
-        <div>FileFortress</div>
+        <Link href="/" className="flex gap-2 items-center">
+          <Image src="/logo.png" alt="File Fortress" width="45" height="5" />
+          FileFortress
+        </Link>
+
+        <Button variant={"ghost"}>
+          <Link href="/dashboard/files">Your files</Link>
+        </Button>
 
         <div className="flex gap-2">
           <OrganizationSwitcher />
