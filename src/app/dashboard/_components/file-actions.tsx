@@ -37,7 +37,7 @@ export function FileCardActions({
   file,
   isFavorited,
 }: {
-  file: Doc<"files">;
+  file: Doc<"files"> & { url: string | null };
   isFavorited: boolean;
 }) {
   const { toast } = useToast();
@@ -87,9 +87,10 @@ export function FileCardActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem
-            // onClick={() => {
-            //   toggleFavorite({ fileId: file._id });
-            // }}
+            onClick={() => {
+              if (!file.url) return;
+              window.open(file.url, "_blank");
+            }}
             className="flex gap-1 font-bold items-center cursor-pointer"
           >
             <FileDownIcon className="w-5 h-5" /> Download
@@ -151,10 +152,3 @@ export function FileCardActions({
     </>
   );
 }
-
-// function getFileUrl(fileId: Id<"_storage">): string {
-//   console.log("fileId", fileId);
-//   const url = `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${fileId}`;
-//   console.log("url", url);
-//   return url;
-// }

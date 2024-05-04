@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import {
   Card,
   CardContent,
@@ -20,7 +20,7 @@ import { FileCardActions } from "./file-actions";
 export default function FileCard({
   file,
 }: {
-  file: Doc<"files"> & { isFavorited: boolean };
+  file: Doc<"files"> & { isFavorited: boolean; url: string | null };
 }) {
   const typeIcons = {
     image: <ImageIcon />,
@@ -46,14 +46,9 @@ export default function FileCard({
           {/* <CardDescription>Card Description</CardDescription> */}
         </CardHeader>
         <CardContent className="h-[120px] flex items-center justify-center">
-          {file.type === "image" && (
-            <ImageIcon className="w-20 h-20" />
-            // <Image
-            //   src={getFileUrl(file.fileId)}
-            //   alt={file.name}
-            //   height="100"
-            //   width="200"
-            // />
+          {file.type === "image" && file.url && (
+            // <ImageIcon className="w-20 h-20" />
+            <Image src={file.url} alt={file.name} height="100" width="100" />
           )}
 
           {file.type === "csv" && <GanttChart className="w-20 h-20" />}
